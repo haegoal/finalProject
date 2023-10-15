@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="~{component/config :: config}"></th:block>
+  <link rel="stylesheet" th:href="@{/css/slick.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+</head>
+<body>
+<div th:replace="~{component/nav :: nav}"></div>
+<div>
+    <img src="./images/123.png">
+</div>
+<div class="last">
+    <div><img src= "./images/travel1.jpg" style="width: 1000%; height: 500px;"></div>
+    <div><img src= "./images/travel2.jpg" style="width: 1000%; height: 500px;"></div>
+    <div><img src= "./images/travel3.jpg" style="width: 1000%; height: 500px;"></div>
+
+</div>
+
+<div th:replace="~{component/footer :: footer}"></div>
+<script th:inline="javascript">
+    $(document).ready(function(){
+        $('.last').bxSlider();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{component/config :: config}"></th:block>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+</head>
+<body>
+<div th:replace="~{component/nav :: nav}"></div>
+
+<ul>
+    <li onclick="kakaoLogin();">
+        <a href="javascript:void(0)">
+            <span>카카오 로그인</span>
+        </a>
+    </li>
+    <li onclick="kakaoLogout();">
+        <a href="javascript:void(0)">
+            <span>카카오 로그아웃</span>
+        </a>
+    </li>
+</ul>
+<div th:replace="~{component/footer :: footer}"></div>
+<script th:inline="javascript">
+    Kakao.init('b7e4f9d748685e073e7ee7533744f3e6'); //발급받은 키 중 javascript키를 사용해준다.
+    console.log(Kakao.isInitialized()); // sdk초기화여부판단
+    //카카오로그인
+    function kakaoLogin() {
+        Kakao.Auth.login({
+            success: function (response) {
+                Kakao.API.request({
+                    url: '/v2/user/me',
+                    success: function (response) {
+                        const memberEmail = response.kakao_account.email;
+                        $.ajax({
+                            url:"/member/login",
+                            type:"post",
+                            data:{
+                                memberEmail
+                            },
+                            success:function (data){
+                                location.href="/";
+                            }
+                        })
+                    },
+                    fail: function (error) {
+                        console.log(error)
+                    },
+                })
+            },
+            fail: function (error) {
+                console.log(error)
+            },
+        })
+    }
+
+    //카카오로그아웃
+    function kakaoLogout() {
+        if (Kakao.Auth.getAccessToken()) {
+            Kakao.API.request({
+                url: '/v1/user/unlink',
+                success: function (response) {
+                    console.log(response)
+                    $.ajax({
+                        url:"/member/logout",
+                        type:"get",
+                        success:function (data){
+                            location.href="/";
+                        }
+                    })
+                },
+                fail: function (error) {
+                    console.log(error)
+                },
+            })
+            Kakao.Auth.setAccessToken(undefined)
+        }
+    }
+</script>
+</body>
+</html>
+
+

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="nav" id="nav">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Roboto');
+
+    /*body 초기화*/
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Roboto", serif;
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      margin: 2em 0 1.5em 0;
+    }
+
+    nav {
+      opacity: 80%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      position: relative;
+      background: black;
+    }
+
+    ul, li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    #div-menu{
+      opacity: 80%;
+      background-color: black;
+      width: 5000px;
+    }
+
+
+    #main-menu > li {
+      float: left;
+      position: relative;
+    }
+
+    #main-menu > li > a {
+      font-weight: normal;
+      font-size: 0.85rem;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      display: block;
+      padding: 14px 50px;
+    }
+
+    .sub-menu {
+      position: absolute;
+      background: #182952;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.15s ease-in;
+    }
+
+    .sub-menu > li {
+      padding: 16px 50px;
+      background-color: black;
+      border-bottom: 1px solid rgba(0,0,0,0.15);
+    }
+
+    .sub-menu > li >  a {
+      color: white;
+      font-weight: normal;
+      text-decoration: none;
+    }
+
+    #main-menu > li:hover .sub-menu {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .sub-menu  >  li:hover {
+      background: gray;
+    }
+
+    @media screen and (max-width: 1100px) {
+      #main-menu > li > a {
+        padding: 14px 10px;
+      }
+    }
+
+    @media screen and (min-width: 2000px) {
+      #main-menu > li > a {
+        padding: 14px 120px;
+      }
+    }
+
+    @media screen and (min-width: 3000px) {
+      #main-menu > li > a {
+        padding: 14px 250px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+<div id="div-menu">
+<nav role="navigation">
+  <p style="position: fixed; left: 1px ">
+    <a href="/">
+      <img src="./images/hotel.png" style="width: 90%">
+    </a>
+  </p>
+  <ul id="main-menu">
+    <li><a href="#">MENU1</a></li>
+    <li><a href="#">MENU2</a>
+      <ul class="sub-menu">
+        <li><a href="/member/login" aria-label="login">login</a></li>
+        <li><a href="#" aria-label="subemnu">submenu</a></li>
+        <li><a href="#" aria-label="subemnu">submenu</a></li>
+        <li><a href="#" aria-label="subemnu">submenu</a></li>
+      </ul>
+    </li>
+    <li><a href="#">MENU3</a>
+      <ul class="sub-menu">
+        <li><a href="#" aria-label="subemnu">submenu</a></li>
+        <li><a href="#" aria-label="subemnu">submenu</a></li>
+        <li><a href="#" aria-label="subemnu">submenu</a></li>
+        <li><a href="#" aria-label="subemnu">submenu</a></li>
+      </ul>
+    </li>
+    <li><a href="#">MENU4</a>
+      <ul class="sub-menu">
+        <li><a href="#" aria-label="subemnu">submenu</a></li>
+        <li><a href="#" aria-label="subemnu">submenu</a></li>
+        <li><a href="#" aria-label="subemnu">submenu</a></li>
+        <li><a href="#" aria-label="subemnu">submenu</a></li>
+        <li><a href="#" aria-label="subemnu">submenu</a></li>
+      </ul>
+    </li>
+    <li><a href="#">MENU5</a></li>
+    <li><a href="#">MENU6</a></li>
+    <div th:if ="${session.user != null}">
+      <li class="nav-item">
+      <li class="nav-link active" aria-current="page" th:text="|${session.user} 님|"></li>
+      </li>
+    </div>
+  </ul>
+  <p style="position: fixed; right: 47px ">
+      <a href="/reserve"><img src="./images/reserve.png" style="width: 100%"></a>
+  </p>
+  <p style="position: fixed; right: 0px ">
+    <img src="./images/=.png" style="width: 100%" onclick="hide_fn()">
+  </p>
+</nav>
+</div>
+</body>
+  <script th:inline="javascript">
+    const hide_fn = () => {
+      const mainMenu = document.querySelector("#main-menu");
+        if (mainMenu.style.display === "none" || mainMenu.style.display === "") {
+          mainMenu.style.display = "block";
+        } else {
+          mainMenu.style.display = "none";
+        }
+    };
+
+  </script>
+</div>
+</html>
