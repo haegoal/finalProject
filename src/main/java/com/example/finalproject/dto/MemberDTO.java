@@ -23,9 +23,6 @@ public class MemberDTO {
     private String memberBirth;
     private String createdAt;
     private int fileAttached;
-    private List<MultipartFile> memberProfile;
-    private List<String> originalFileName = new ArrayList<>();
-    private List<String> storedFileName = new ArrayList<>();
 
     public static MemberDTO toDTO(MemberEntity memberEntity) {
         MemberDTO memberDTO = new MemberDTO();
