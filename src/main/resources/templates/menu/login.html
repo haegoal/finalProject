@@ -6,7 +6,11 @@
 </head>
 <body>
 <div th:replace="~{component/nav :: nav}"></div>
-
+<div>
+    <input type="text" name="email">
+    <button onclick="confirm_fn()">인증</button><br>
+    <input type="text" name="confirm" placeholder="인증번호">
+</div>
 <ul>
     <li onclick="kakaoLogin();">
         <a href="javascript:void(0)">
@@ -21,6 +25,22 @@
 </ul>
 <div th:replace="~{component/footer :: footer}"></div>
 <script th:inline="javascript">
+
+    const confirm_fn = () => {
+        const email = document.querySelector("[name=email]").value;
+      $.ajax({
+          type:"post",
+          url:"/member/emailConfirm",
+          data: {
+              email
+          },
+          success:function (data){
+              console.log(data)
+          }
+      })
+    }
+
+
     Kakao.init('b7e4f9d748685e073e7ee7533744f3e6'); //발급받은 키 중 javascript키를 사용해준다.
     console.log(Kakao.isInitialized()); // sdk초기화여부판단
     //카카오로그인

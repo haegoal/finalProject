@@ -1,6 +1,7 @@
 package com.example.finalproject.controller;
 
 import com.example.finalproject.dto.MemberDTO;
+import com.example.finalproject.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 @RequestMapping("/member")
 public class MemberController {
+    private final EmailService emailService;
 
     @GetMapping("/login")
     public String login(){
@@ -34,5 +36,11 @@ public class MemberController {
         session.removeAttribute("user");
         session.removeAttribute("userId");
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/emailConfirm")
+    public ResponseEntity emailConfirm(@RequestParam String email) throws Exception {
+        String confirm = emailService.sendSimpleMessage(email);
+        return new ResponseEntity<>(confirm, HttpStatus.OK);
     }
 }
